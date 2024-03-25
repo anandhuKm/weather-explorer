@@ -7,6 +7,10 @@ A web application for the exploration of German weather data provided by the [DW
 - install dependencies: `pnpm install` or `npm install`
 - run the dev server: `pnpm dev` or `npm run dev`
 
+While the dev server is running, you can make changes to the code and the page will dynamically update.
+
+Svelte components are files with the file ending `.svelte` and can contain JS/TS code in the `<script>` tag, CSS in the `<style>` tag as well as standard HTML tags. The `src/routes/+page.svelte` is a component for the index page.
+
 ## Tasks
 
 1. Implement the function `countStationsPerState` in `src/routes/+page.svelte` to count the number of weather stations for each unique state.
