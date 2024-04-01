@@ -27,7 +27,9 @@
 		TODO
 		Compute the width of the bar for the given value and replace the dummy return value below.
 		*/
-		return width / 2;
+		// barwidth = value / max value * available width
+		return (value / 100 ) * ( width - marginLeft - marginRight )
+
 	}
 </script>
 
@@ -42,7 +44,7 @@
 		>
 			<rect width={barWidth} height={barHeight} />
 			<text x={barWidth} y={barHeight / 2} dx="0.2em" dy="0.3em">
-				<tspan>{name}</tspan> <tspan class="value">({value})</tspan>
+				<tspan class="name">{name}</tspan> <tspan class="value">({value})</tspan>
 			</text>
 		</g>
 	{/each}
@@ -64,9 +66,14 @@
 
 	g:hover {
 		color: var(--highlight-color);
+		cursor: pointer;
 	}
 
 	tspan.value {
 		opacity: 0.5;
+		color: black;
+	}
+	tspan.name:hover {
+		color: black;
 	}
 </style>

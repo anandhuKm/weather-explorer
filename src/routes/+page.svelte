@@ -7,13 +7,25 @@
 	// the $state makes these variables reactive but they are still used as if they were just normal variables
 	let stations = $state<Station[]>([]);
 	let selected = $state<Station[]>([]);
-
+	let stationSelected = $state<Station[]>([]);
+	
 	function countStationsPerState(stations: Station[]): [string, number][] {
 		/* TODO
 		Count the number of stations per unique state using the station data and replace the static values below.
 		*/
-		return [
-			["Bayern", 100],
+		
+		const stateCount:[string, number][] = [];
+		let existingCheck
+		stations.map(station =>{					 
+			existingCheck = stateCount.findIndex(index => index[0] === station.state)
+			existingCheck === -1 ? stateCount.push([station.state,1]) : //add station 
+			stateCount[existingCheck][1]++;    // else increment state number
+
+		}); 
+		return stateCount
+
+		/*return [
+			["Bayern", 1],
 			["Baden-Württemberg", 61],
 			["Niedersachsen", 44],
 			["Nordrhein-Westfalen", 42],
@@ -29,26 +41,52 @@
 			["Berlin", 5],
 			["Hamburg", 4],
 			["Bremen", 2]
-		];
+		]; */
 	}
 
 	function toggleSelection(station: Station) {
 		/* TODO
 		Implement this function to toggle the selection of the given station and replace the code below.
 		*/
-		selected = [station];
+
+		if(stationSelected) {
+			const active = stationSelected.findIndex(index => index.id === station.id)
+			stationSelected = active !== -1 ? stationSelected.filter(f => f.id !== station.id) :
+			[...stationSelected,station];	
+		} else {
+			stationSelected = [station];	
+		}
 	}
 
 	function selectStationsByState(state: string) {
 		/* TODO
 		Update the selected stations to the ones in the given state.
 		*/
+
+		selected = []; 
+		stationSelected = [];
+			stations.map(station =>{		
+				station.state === state ? selected.push(station) : null 
+			});
 	}
 
 	function resetSelection() {
 		/* TODO
 		Reset to the empty selection.
 		*/
+		selected = [];
+		stationSelected = [];
+	}
+
+	function allSelection() {
+		/* TODO
+		Select all the stations in Germany to view multiple state sations.
+		*/
+		selected = [];
+		stations.map(station =>{		
+				selected.push(station)
+			});
+			
 	}
 
 	// this runs initially when the page loads
@@ -62,6 +100,7 @@
 		<h1>German Weather Stations</h1>
 		<div id="selection">
 			<p>{selected.length} of {stations.length} selected</p>
+			<button  onclick={allSelection}>Select All</button>
 			<button disabled={selected.length === 0} onclick={resetSelection}>Reset</button>
 		</div>
 		<Barchart
@@ -77,14 +116,14 @@
 		<StationsMap
 			width={600}
 			height={800}
-			{stations}
+			stations ={selected}
 			bind:selected
 			onselect={(station) => toggleSelection(station)}
 		/>
 	</section>
 
-	{#each selected ?? stations as station (station.id)}
-		<StationCard {station} />
+	{#each stationSelected ?? stations as station (station.id)}
+	<StationCard {station} />
 	{/each}
 </main>
 

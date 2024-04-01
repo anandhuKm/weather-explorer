@@ -52,9 +52,9 @@
 			<!-- svelte-ignore a11y-click-events-have-key-events -->
 			<!-- svelte-ignore a11y-no-static-element-interactions -->
 			<circle
-				class="station"
+				class:station
 				r={5}
-				onclick={() => onselect && onselect(station)}
+				onclick={() => {onselect && onselect(station)}}
 				class:selected={selected.map((s) => s.id).includes(station.id)}
 			>
 				<title>{station.name}</title>
@@ -73,5 +73,13 @@
 	.station {
 		fill: var(--primary-color);
 		opacity: 0.7;
+		cursor: pointer;
 	}
+
+	.station:hover {
+		fill: black;
+		opacity: 0.7;
+		cursor: pointer;
+	}
+	
 </style>
