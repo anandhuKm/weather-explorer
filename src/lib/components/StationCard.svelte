@@ -8,28 +8,27 @@
 		/* TODO
 		Format the geographic coordinates as a string.
 		 */
-		function convertion(coords:number,type:string): string {
-
-			const positiveCord = Math.abs(coords); 			//convert to positive for easier calculation
-       		const degrees = Math.floor(positiveCord); 		
-        	const minutes = Math.floor((positiveCord - degrees) * 60);
-					         								// to get second, multiply the remaining by 3600(60 minutes in degree & 60 in minutes) and fix it to max 2 decimal place
-        	const seconds = ((positiveCord - degrees - minutes / 60) * 3600).toFixed(2);
-        	const direction = type === "longitude" ? coords >= 0 ?  'E':  'W' : coords>= 0? 'N' :'S'	//check for negative or positive coords
-        	return degrees + "° " + minutes + "' " + seconds + "'' " + direction;
+		function convertion(coords: number, type: string): string {
+			const positiveCord = Math.abs(coords); //convert to positive for easier calculation
+			const degrees = Math.floor(positiveCord);
+			const minutes = Math.floor((positiveCord - degrees) * 60);
+			// to get second, multiply the remaining by 3600(60 minutes in degree & 60 in minutes) and fix it to max 2 decimal place
+			const seconds = ((positiveCord - degrees - minutes / 60) * 3600).toFixed(2);
+			const direction = type === "longitude" ? (coords >= 0 ? "E" : "W") : coords >= 0 ? "N" : "S"; //check for negative or positive coords
+			return degrees + "° " + minutes + "' " + seconds + "'' " + direction;
 		}
-		let longitudeString = convertion(longitude,"longitude");
-		let latitudeString = convertion(latitude,"latitude");
-		
-		return latitudeString+","+longitudeString
-    }
+		let longitudeString = convertion(longitude, "longitude");
+		let latitudeString = convertion(latitude, "latitude");
+
+		return latitudeString + "," + longitudeString;
+	}
 
 	function formatHeight(height: number): string {
 		/* TODO
 		Format the station's height as a string.
 		*/
 
-		return height.toString()+" meters";
+		return height.toString() + " meters";
 	}
 </script>
 
